@@ -1,18 +1,18 @@
-# Storm Distributed Mode ¼³Ä¡
+ï»¿# Storm Distributed Mode ì„¤ì¹˜
 
 
-**Âü°í¹®¼­**
+**ì°¸ê³ ë¬¸ì„œ**
 https://tedwon.atlassian.net/wiki/pages/viewpage.action?pageId=1212933
 http://www.michael-noll.com/tutorials/running-multi-node-storm-cluster/
 
 
-#### »çÀü ÁØºñ»çÇ×
+#### ì‚¬ì „ ì¤€ë¹„ì‚¬í•­
 * CentOS 6.6 
-* ¹İµå½Ã root ·Î ÀÛ¾÷ÇÑ´Ù. 
-* hosts ÆÄÀÏ°ú windows ¸ğµÎ hosts  ÆÄÀÏ¿¡ VM¸ñ·ÏÀ» µî·ÏÇØµĞ´Ù. (°³¹ß Å×½ºÆ® ÆíÀÇ»ó)
-* kafka ¿Í zookeeper ´Â ¼³Ä¡µÇ¾ú´Ù°í °¡Á¤ÇÏ°í ÁøÇàÇÑ´Ù. 
+* ë°˜ë“œì‹œ root ë¡œ ì‘ì—…í•œë‹¤. 
+* hosts íŒŒì¼ê³¼ windows ëª¨ë‘ hosts  íŒŒì¼ì— VMëª©ë¡ì„ ë“±ë¡í•´ë‘”ë‹¤. (ê°œë°œ í…ŒìŠ¤íŠ¸ í¸ì˜ìƒ)
+* kafka ì™€ zookeeper ëŠ” ì„¤ì¹˜ë˜ì—ˆë‹¤ê³  ê°€ì •í•˜ê³  ì§„í–‰í•œë‹¤. 
 
-#### VM È¯°æ
+#### VM í™˜ê²½
 Storm  | hostname  | private ip | program
 ------------ | ------------ | ------------- | -------------
 nimbus | kf-broker-1  |  192.168.13.11   |  kafka + zookeeper
@@ -20,30 +20,30 @@ supervisor | kf-broker-2   |  192.168.13.12  |  kafka + zookeeper
 supervisor | kf-broker-3   |  192.168.13.13  |  kafka + zookeeper
 
 
-#### ¼³Ä¡ ¼ø¼­
+#### ì„¤ì¹˜ ìˆœì„œ
 
 // os update
 yum update
 
-// openJDK  ¼³Ä¡ 
+// openJDK  ì„¤ì¹˜ 
 yum -y install java-1.7.0-openjdk-devel
 
-// JAVA_HOME È¯°æº¯¼ö ¼¼ÆÃÇÏ±â - ¼Ò½º ºôµåÇÒ¶§ ÇÊ¼ö.
+// JAVA_HOME í™˜ê²½ë³€ìˆ˜ ì„¸íŒ…í•˜ê¸° - ì†ŒìŠ¤ ë¹Œë“œí• ë•Œ í•„ìˆ˜.
 
 vi ~/.bashrc
 
-// °æ·Î¸¦ ¹İµå½Ã È®ÀÎÇÑ ÈÄ ´ÙÀ½¶óÀÎ Ãß°¡ 
+// ê²½ë¡œë¥¼ ë°˜ë“œì‹œ í™•ì¸í•œ í›„ ë‹¤ìŒë¼ì¸ ì¶”ê°€ 
 JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.95.x86_64"
 export JAVA_HOME
 
-// Á¾¼Ó¼º ¼³Ä¡ 
+// ì¢…ì†ì„± ì„¤ì¹˜ 
 yum -y install gcc gcc-c++ boost boost-devel pkgconfig uuidd libtool autoconf make coreutils uuid-dev uuid-devel libuuid-devel e2fsprogs-devel
 
 
-//°æ·Î ¹Ù²Ù°í ½ÃÀÛÇÑ´Ù. 
+//ê²½ë¡œ ë°”ê¾¸ê³  ì‹œì‘í•œë‹¤. 
 cd /usr1/program
 
-//zeroMQ ¼³Ä¡
+//zeroMQ ì„¤ì¹˜
 
 *zeroMQ
 wget http://download.zeromq.org/zeromq-2.1.11.tar.gz
@@ -61,7 +61,7 @@ cd jzmq
 ./autogen.sh
 ./configure
 
-//ÀÛ¼ºÀÏ ÇöÀç ¹öÀü¿¡¼­ makeÇÒ¶§  ¹®Á¦°¡ ÀÖ´Ù.  ¾Æ·¡Ã³·³ Æ¯Á¤¶óÀÎÀ» º¯°æÇÑ´Ù 
+//ì‘ì„±ì¼ í˜„ì¬ ë²„ì „ì—ì„œ makeí• ë•Œ  ë¬¸ì œê°€ ìˆë‹¤.  ì•„ë˜ì²˜ëŸ¼ íŠ¹ì •ë¼ì¸ì„ ë³€ê²½í•œë‹¤ 
 sed -i 's/classdist_noinst.stamp/classnoinst.stamp/g' /usr1/program/jzmq/src/Makefile.am
 
 make
@@ -78,12 +78,12 @@ mv apache-storm-0.10.0  /usr1/storm-0.10.0
 
 
 
-*conf/storm.yaml ¼öÁ¤ ¹× **¸ğµç ³ëµå ¹èÆ÷**
+*conf/storm.yaml ìˆ˜ì • ë° **ëª¨ë“  ë…¸ë“œ ë°°í¬**
 
-//vi·Î ÆíÁı
+//vië¡œ í¸ì§‘
 vi /usr1/storm-0.10.0/conf/storm.yaml 
 
-//¾Æ·¡ ³»¿ëÀ» ÀÔ·ÂÇÑ´Ù. 
+//ì•„ë˜ ë‚´ìš©ì„ ì…ë ¥í•œë‹¤. 
 storm.zookeeper.servers:
     - "kf-broker-1"
     - "kf-broker-2"
@@ -92,7 +92,7 @@ storm.zookeeper.servers:
 storm.local.dir: "/usr1/storm-0.10.0/data"
 nimbus.host: "kf-broker-1"
 
-# how many workers run on that machine
+
 supervisor.slots.ports:
     - 6700
     - 6701
@@ -100,12 +100,12 @@ supervisor.slots.ports:
     - 6703
 
 
-//ÆíÁı¿Ï·áÇÏ¿´À¸¸é °¢ vmÀ¸·Î ¹èÆ÷ÇÑ´Ù. 
-ÀÌºÎºĞÀº Â÷ÈÄ¿¡ Ãß°¡ 	
+//í¸ì§‘ì™„ë£Œí•˜ì˜€ìœ¼ë©´ ê° vmìœ¼ë¡œ ë°°í¬í•œë‹¤. 
+ì´ë¶€ë¶„ì€ ì°¨í›„ì— ì¶”ê°€ 	
 	
 
 
-*Storm ½ÇÇà¼ø¼­ 
+*Storm ì‹¤í–‰ìˆœì„œ 
 ###Nimbus
 /usr1/storm-0.10.0/bin/storm nimbus
 
