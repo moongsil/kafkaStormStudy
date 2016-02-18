@@ -101,17 +101,16 @@ supervisor.slots.ports:
 
 
 //편집완료하였으면 각 vm으로 배포한다. 
-** 이부분은 차후에 추가 	
+이부분은 차후에 추가 	
 	
-	
-	
+
 
 *Storm 실행순서 
-**Nimbus**
+###Nimbus
 /usr1/storm-0.10.0/bin/storm nimbus
 
-**supervisor**
+###supervisor
 /usr1/storm-0.10.0/bin/storm supervisor
 
-**Web UI** (default port :8080)
+###Web UI### (default port :8080)
 /usr1/storm-0.10.0/bin/storm ui 
