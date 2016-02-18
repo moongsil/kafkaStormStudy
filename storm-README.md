@@ -22,30 +22,30 @@ supervisor | kf-broker-3   |  192.168.13.13  |  kafka + zookeeper
 
 #### 설치 순서
 
-// os update
+// os update  
 yum update
 
-// openJDK  설치 
+// openJDK  설치   
 yum -y install java-1.7.0-openjdk-devel
 
 // JAVA_HOME 환경변수 세팅하기 - 소스 빌드할때 필수.
 
 vi ~/.bashrc
 
-// 경로를 반드시 확인한 후 다음라인 추가 
+// 경로를 반드시 확인한 후 다음라인 추가   
 JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.95.x86_64"
 export JAVA_HOME
 
-// 종속성 설치 
+// 종속성 설치   
 yum -y install gcc gcc-c++ boost boost-devel pkgconfig uuidd libtool autoconf make coreutils uuid-dev uuid-devel libuuid-devel e2fsprogs-devel
 
 
-//경로 바꾸고 시작한다. 
+//경로 바꾸고 시작한다.   
 cd /usr1/program
 
-//zeroMQ 설치
+//zeroMQ 설치  
 
-*zeroMQ
+*zeroMQ  
 wget http://download.zeromq.org/zeromq-2.1.11.tar.gz
 tar zxf zeromq-2.1.11.tar.gz
 cd zeromq-2.1.11
@@ -53,7 +53,7 @@ cd zeromq-2.1.11
 make
 make install
 
-*JZMQ
+*JZMQ  
 yum -y install git
 
 git clone https://github.com/nathanmarz/jzmq.git // 
@@ -61,13 +61,13 @@ cd jzmq
 ./autogen.sh
 ./configure
 
-//작성일 현재 버전에서 make할때  문제가 있다.  아래처럼 특정라인을 변경한다 
+//작성일 현재 버전에서 make할때  문제가 있다.  아래처럼 특정라인을 변경한다   
 sed -i 's/classdist_noinst.stamp/classnoinst.stamp/g' /usr1/program/jzmq/src/Makefile.am
 
 make
 make install
 
-*Storm
+*Storm  
 cd /usr1/program
 wget http://apache.mirror.cdnetworks.com/storm/apache-storm-0.10.0/apache-storm-0.10.0.tar.gz
 
@@ -78,26 +78,26 @@ mv apache-storm-0.10.0  /usr1/storm-0.10.0
 
 
 
-*conf/storm.yaml 수정 및 **모든 노드 배포**
+*conf/storm.yaml 수정 및 **모든 노드 배포*  
 
 //vi로 편집
 vi /usr1/storm-0.10.0/conf/storm.yaml 
 
 //아래 내용을 입력한다. 
-storm.zookeeper.servers:
-    - "kf-broker-1"
-    - "kf-broker-2"
-	- "kf-broker-3"
+storm.zookeeper.servers:  
+    - "kf-broker-1"  
+    - "kf-broker-2"  
+	- "kf-broker-3"  
 
-storm.local.dir: "/usr1/storm-0.10.0/data"
-nimbus.host: "kf-broker-1"
+storm.local.dir: "/usr1/storm-0.10.0/data"  
+nimbus.host: "kf-broker-1"  
 
 
-supervisor.slots.ports:
-    - 6700
-    - 6701
-    - 6702
-    - 6703
+supervisor.slots.ports:  
+    - 6700  
+    - 6701  
+    - 6702  
+    - 6703  
 
 
 //편집완료하였으면 각 vm으로 배포한다. 
@@ -112,5 +112,5 @@ supervisor.slots.ports:
 ###supervisor
 /usr1/storm-0.10.0/bin/storm supervisor
 
-###Web UI### (default port :8080)
+Web UI (default port :8080)
 /usr1/storm-0.10.0/bin/storm ui 
