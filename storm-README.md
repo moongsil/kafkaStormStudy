@@ -30,7 +30,7 @@ yum -y install java-1.7.0-openjdk-devel
 
 // JAVA_HOME 환경변수 세팅하기 - 소스 빌드할때 필수.
 
-vi ~/.bashrc
+
 
 
 ### 0.9 이전 버전일때 는  zeroMQ /jzmq 를 설치해야한다. 
@@ -38,8 +38,8 @@ vi ~/.bashrc
 
 
 // 경로를 반드시 확인한 후 다음라인 추가   
-JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.95.x86_64"
-export JAVA_HOME
+
+
 
 // 종속성 설치   
 yum -y install gcc gcc-c++ boost boost-devel pkgconfig uuidd libtool autoconf make coreutils uuid-dev uuid-devel libuuid-devel e2fsprogs-devel
@@ -130,7 +130,7 @@ storm.messaging.netty.min_wait_ms: 100
 /usr1/storm-0.10.0/bin/storm nimbus &
 
 ###supervisor
-/usr1/storm-0.10.0/bin/storm supervisor
+/usr1/storm-0.10.0/bin/storm supervisor &
 
 Web UI (default port :8080)
 /usr1/storm-0.10.0/bin/storm ui  &
