@@ -32,6 +32,11 @@ yum -y install java-1.7.0-openjdk-devel
 
 vi ~/.bashrc
 
+
+### 0.9 이전 버전일때 는  zeroMQ /jzmq 를 설치해야한다. 
+--------------------------------------------------------- 
+
+
 // 경로를 반드시 확인한 후 다음라인 추가   
 JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.95.x86_64"
 export JAVA_HOME
@@ -66,6 +71,11 @@ sed -i 's/classdist_noinst.stamp/classnoinst.stamp/g' /usr1/program/jzmq/src/Mak
 
 make
 make install
+---------------------------------------------------------
+
+###  Storm 0.9 이상 버전일때
+
+ zeroMQ /jzmq 를 설치 안해도 된다. 
 
 *Storm  
 cd /usr1/program
@@ -99,7 +109,17 @@ supervisor.slots.ports:
     - 6702  
     - 6703  
 
-
+# 0.9  이상은 netty쓰면 된다. 
+storm.messaging.transport: "backtype.storm.messaging.netty.Context"
+storm.messaging.netty.server_worker_threads: 1
+storm.messaging.netty.client_worker_threads: 1
+storm.messaging.netty.buffer_size: 5242880
+storm.messaging.netty.max_retries: 100
+storm.messaging.netty.max_wait_ms: 1000
+storm.messaging.netty.min_wait_ms: 100
+	
+	
+	
 //편집완료하였으면 각 vm으로 배포한다. 
 이부분은 차후에 추가 	
 	
@@ -107,10 +127,10 @@ supervisor.slots.ports:
 
 *Storm 실행순서 
 ###Nimbus
-/usr1/storm-0.10.0/bin/storm nimbus
+/usr1/storm-0.10.0/bin/storm nimbus &
 
 ###supervisor
 /usr1/storm-0.10.0/bin/storm supervisor
 
 Web UI (default port :8080)
-/usr1/storm-0.10.0/bin/storm ui 
+/usr1/storm-0.10.0/bin/storm ui  &
